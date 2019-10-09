@@ -47,12 +47,14 @@ class ValidityTester(object):
         aio test all proxies.
         """
         print('ValidityTester is working')
+
+
         try:
             loop = asyncio.get_event_loop()
-            tasks = [self.test_single_proxy(proxy) for proxy in self._raw_proxies]  # 循环检测每个代理是否可用
+            tasks = [self.test_single_proxy(proxy) for proxy in list(set(self._raw_proxies))]  # 循环检测每个代理是否可用
             # for i in range(int(int(len(tasks)) / 20) + 1):
             #     loop.run_until_complete(asyncio.wait(tasks[20 * i:20 * (int(i) + 1)]))
-            loop.run_until_complete(asyncio.wait(list(set(tasks))))
+            loop.run_until_complete(asyncio.wait(tasks))
         # except ValueError:
         except Exception as e:
             print('Async Error: {}'.format(e))
