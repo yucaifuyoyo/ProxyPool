@@ -1,5 +1,5 @@
 from flask import Flask, g
-
+import time
 from .db import RedisClient
 
 __all__ = ['app']
@@ -28,7 +28,9 @@ def get_proxy():
     Get a proxy
     """
     conn = get_conn()
-    return conn.pop()
+    # proxies = conn.pop()
+    proxies = conn.srand(conn.queue_len)
+    return proxies
 
 
 @app.route('/count')

@@ -31,7 +31,7 @@ class FreeProxyGetter(object, metaclass=ProxyMetaclass):
         return proxies
 
     def crawl_kuaidaili(self):
-        for page in range(1, 3):
+        for page in range(1, 10):
             # 快代理
             start_url = 'https://www.kuaidaili.com/free/inha/{}/'.format(page)
             html = get_page(start_url)
@@ -45,7 +45,7 @@ class FreeProxyGetter(object, metaclass=ProxyMetaclass):
 
     def crawl_xicidaili(self):
         # 西刺免费代理IP
-        for page in range(1, 3):
+        for page in range(1, 5):
             start_url = 'http://www.xicidaili.com/wt/{}'.format(page)
             html = get_page(start_url)
             ip_adress = re.compile(
@@ -57,7 +57,7 @@ class FreeProxyGetter(object, metaclass=ProxyMetaclass):
                 result = adress + ':' + port
                 yield result.replace(' ', '')
 
-    def crawl_daili66(self, page_count=3):
+    def crawl_daili66(self, page_count=10):
         # 66免费代理网
         start_url = 'http://www.66ip.cn/{}.html'
         urls = [start_url.format(page) for page in range(1, page_count + 1)]
@@ -111,7 +111,7 @@ class FreeProxyGetter(object, metaclass=ProxyMetaclass):
 
     def crawl_superfastip(self):
         # 极速数据
-        for i in range(1, 3):
+        for i in range(1, 10):
             start_url = 'http://www.superfastip.com/welcome/freeip/{}'.format(i)
             html = get_page(start_url)
             ip_adress = re.compile('>([\d\.]+?)</a></td><td>(\d+)</td>')
@@ -120,16 +120,16 @@ class FreeProxyGetter(object, metaclass=ProxyMetaclass):
             for adress, port in re_ip_adress:
                 result = adress + ':' + port
                 yield result.replace(' ', '')
-    
+
     def crawl_89ip(self):
         # 89免费代理
-        for i in range(1, 3):
+        for i in range(1, 10):
             start_url = 'http://www.89ip.cn/index_{}.html'.format(i)
             html = get_page(start_url)
             ip_adress = re.compile('''<td>
-			([\d\.]+?)		</td>
-		<td>
-			(\d+)		</td>''')
+            ([\d\.]+?)      </td>
+        <td>
+            (\d+)       </td>''')
             # \s * 匹配空格，起到换行作用
             re_ip_adress = ip_adress.findall(str(html))
             for adress, port in re_ip_adress:
@@ -146,7 +146,7 @@ class FreeProxyGetter(object, metaclass=ProxyMetaclass):
         for adress, port in re_ip_adress:
             result = adress + ':' + port
             yield result.replace(' ', '')
-            
+
     def crawl_iphai(self):
         # ip海免费代理
         start_url = 'http://www.iphai.com/'
