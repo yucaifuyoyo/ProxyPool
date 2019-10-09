@@ -38,13 +38,13 @@ class RedisClient(object):
             raise PoolEmptyError
 
     def srand(self, num):
-    try:
-        # num = random.randint(int(int(num)/1.5), num)
-        num = random.randint(1, num)
-        print(num)
-        return self._db.lindex('proxies', num)
-    except:
-        raise PoolEmptyError
+        try:
+            # num = random.randint(int(int(num)/1.5), num)
+            num = random.randint(1, num)
+            print(num)
+            return self._db.lindex('proxies', num)
+        except:
+            raise PoolEmptyError
 
     @property
     def queue_len(self):
