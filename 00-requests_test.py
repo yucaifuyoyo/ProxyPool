@@ -1,10 +1,8 @@
-import requests
-import json
-import time
-import pymysql
 import logging
-import random
-from lxml import etree
+import time
+
+import pymysql
+import requests
 
 logging.basicConfig(
     level=logging.INFO,  # 定义输出到文件的log级别，大于此级别的都被输出

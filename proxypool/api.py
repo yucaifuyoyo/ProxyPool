@@ -1,5 +1,5 @@
 from flask import Flask, g
-import time
+
 from .db import RedisClient
 
 __all__ = ['app']

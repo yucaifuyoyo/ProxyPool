@@ -1,15 +1,15 @@
+import random
+
 import redis
+
 from proxypool.error import PoolEmptyError
-from proxypool.setting import HOST, PORT, PASSWORD
+from proxypool.setting import REDIS_HOST, REDIS_POST, REDIS_PASSWORD
 
 
 class RedisClient(object):
-    def __init__(self, host=HOST, port=PORT):
+    def __init__(self):
         # 连接redis数据库
-        if PASSWORD:
-            self._db = redis.Redis(host=host, port=port, password=PASSWORD)
-        else:
-            self._db = redis.Redis(host=host, port=port)
+        self._db = redis.Redis(host=REDIS_HOST, port=REDIS_POST, password=REDIS_PASSWORD, db=3)
 
     def get(self, count=1):
         """
@@ -36,6 +36,7 @@ class RedisClient(object):
             return self._db.rpop("proxies").decode('utf-8')
         except:
             raise PoolEmptyError
+            # return 'The proxy pool is empty'
 
     def srand(self, num):
         try:

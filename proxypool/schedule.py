@@ -1,12 +1,13 @@
+import asyncio
 import time
 from multiprocessing import Process
-import asyncio
+
 import aiohttp
+
 from proxypool.db import RedisClient
 from proxypool.error import ResourceDepletionError
 from proxypool.getter import FreeProxyGetter
 from proxypool.setting import *
-from asyncio import TimeoutError
 
 
 class ValidityTester(object):
@@ -47,7 +48,6 @@ class ValidityTester(object):
         aio test all proxies.
         """
         print('ValidityTester is working')
-
 
         try:
             loop = asyncio.get_event_loop()
