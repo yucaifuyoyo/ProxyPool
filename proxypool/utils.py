@@ -1,7 +1,7 @@
 import asyncio
 import random
 import re
-
+from db import RedisClient
 import aiohttp
 import requests
 from requests.exceptions import ConnectionError
@@ -10,6 +10,12 @@ from fake_useragent import UserAgent
 
 
 def get_page(url, options={}):
+    redis_client = RedisClient()
+    proxy = redis_client.srand()
+    proxies = {
+        "http": "http://{}".format(proxy),
+        "https": "https://{}".format(proxy),
+    }
     try:
         ua = UserAgent()
     except UnicodeDecodeError:
@@ -22,7 +28,12 @@ def get_page(url, options={}):
     headers = dict(base_headers, **options)
     print('Getting', url)
     try:
-        r = requests.get(url, headers=headers, verify=False)
+        if proxy:
+            r = requests.get(url, headers=headers, verify=False, proxies=proxies)
+            print(proxies)
+            print('*' * 100)
+        else:
+            r = requests.get(url, headers=headers, verify=False)
         print('Getting result', url, r.status_code)
         if r.status_code == 200:
             return r.text
@@ -69,4 +80,3 @@ if __name__ == "__main__":
         result = adress + ':' + port
         print(result.replace(' ', ''))
     print('-' * 100)
-

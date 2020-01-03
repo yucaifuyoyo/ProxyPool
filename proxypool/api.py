@@ -28,8 +28,7 @@ def get_proxy():
     Get a proxy
     """
     conn = get_conn()
-    # proxies = conn.pop()
-    proxies = conn.srand(conn.queue_len)
+    proxies = conn.srand()
     return proxies
 
 

@@ -38,12 +38,18 @@ class RedisClient(object):
             raise PoolEmptyError
             # return 'The proxy pool is empty'
 
-    def srand(self, num):
+    def srand(self):
         try:
-            # num = random.randint(int(int(num)/1.5), num)
-            num = random.randint(1, num)
-            print(num)
-            return self._db.lindex('proxies', num)
+            number = self._db.llen("proxies")
+            if number:
+                num = random.randint(0, number-1)
+                print(num)
+                proxy = self._db.lindex('proxies', num)
+                if proxy:
+                    proxy = proxy.decode('utf-8')
+                return proxy
+            else:
+                return None
         except:
             raise PoolEmptyError
 
